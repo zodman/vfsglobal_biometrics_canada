@@ -1,6 +1,7 @@
 all:
     set -xe
     rm -rf *.sqlite
+    gzip -dkf worldcities.csv.gz
     python fetch_data.py
     rows join --fields-exclude="iso2,iso3,admin_name,capital,population,city"  "country,city_ascii" biometrics.csv worldcities.csv merged.csv
     rows query "select * from table1 where notes !=''" merged.csv --output merged2.csv
