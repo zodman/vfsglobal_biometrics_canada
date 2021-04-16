@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push
+  workflow_dispatch:
+  schedule:
+    - cron: 2 0 * * *
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install SSH Key
+      uses: LuisEnMarroquin/setup-ssh-action@v2.0.0
+      with:
+        SSHKEY: ${{ secrets.SSH_KEY }}
+        ORIGIN: python3.ninja
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: update
+      run: |
+        bake all
+        bake upload
+
