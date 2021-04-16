@@ -9,5 +9,5 @@ all:
 
 
 upload:
-    rsync --progress -v *.sqlite python3.ninja:apps/canada/
+    rsync --progress -v *.sqlite zodman@python3.ninja:apps/canada/
     ssh zodman@python3.ninja sudo supervisorctl restart canada
