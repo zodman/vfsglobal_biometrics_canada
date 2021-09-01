@@ -1,4 +1,4 @@
-all:
+biometric:
     set -xe
     rm -rf *.sqlite
     gzip -dkf worldcities.csv.gz
@@ -6,6 +6,11 @@ all:
     rows join --fields-exclude="iso2,iso3,admin_name,capital,population,city"  "country,city_ascii" biometrics.csv worldcities.csv merged.csv
     rows query "select * from table1 where notes !=''" merged.csv --output merged2.csv
     rows convert merged2.csv biometric.sqlite
+eedraws:
+    set -xe
+    rows  convert https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html ee_draws.sqlite
+
+all: biometric eedraws
 
 
 upload:
